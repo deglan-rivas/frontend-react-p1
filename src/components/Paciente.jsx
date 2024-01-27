@@ -1,4 +1,4 @@
-const Paciente = ({paciente, handleEliminar}) => {
+const Paciente = ({paciente, handleEliminar, handleEditar}) => {
   const {
     mascota, 
     propietario, 
@@ -47,13 +47,14 @@ const Paciente = ({paciente, handleEliminar}) => {
       <div className="flex justify-between">
         <input 
           type="button" 
-          className="bg-indigo-600 text-white font-bold uppercase text-center px-8 py-2 rounded-md mb-2 hover:cursor-pointer hover:bg-red-800 transition-colors"  
+          className="bg-indigo-600 text-white font-bold uppercase text-center px-8 py-2 rounded-md mb-2 hover:cursor-pointer hover:bg-indigo-800 transition-colors"  
           value="Editar"
+          onClick={ () => handleEditar(paciente)}
         />
 
         <input 
           type="button" 
-          className="bg-red-700 text-white font-bold uppercase text-center px-8 py-2 rounded-md mb-2 hover:cursor-pointer hover:bg-red-800 transition-colors"  
+          className="bg-red-600 text-white font-bold uppercase text-center px-8 py-2 rounded-md mb-2 hover:cursor-pointer hover:bg-red-700 transition-colors"  
           value="Eliminar"
           onClick={ () => handleEliminar(id) }
         />

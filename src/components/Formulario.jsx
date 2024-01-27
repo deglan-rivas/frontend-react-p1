@@ -1,8 +1,15 @@
-import { useState } from 'react'  
+import { useState, useEffect } from 'react'  
 import Error from './Error'
 import { generarId } from '../../helpers/index.js'
 
-const Formulario = ({listaPacientes, setListaPacientes}) => {
+const Formulario = ({
+  listaPacientes, 
+  setListaPacientes, 
+  pacienteEditado,
+  isChecking,
+  setIsChecking,
+  setPacienteEditado}) => {
+
   const [mascota, setMascota] = useState('')
   const [propietario, setPropietario] = useState('')
   const [email, setEmail] = useState('')
@@ -12,15 +19,14 @@ const Formulario = ({listaPacientes, setListaPacientes}) => {
   const [isValidate, setIsValidate] = useState(false)
   const [mensajeError, setMensajeError] = useState('')
 
-  const [paciente, setPaciente] = useState({})
+  // const [paciente, setPaciente] = useState({})
 
   const nuevoPaciente = {
     mascota,
     propietario,
     email,
     fecha,
-    sintomas,
-    id: generarId()
+    sintomas
   }
 
   const handleSubmit = (e) => {
@@ -32,17 +38,44 @@ const Formulario = ({listaPacientes, setListaPacientes}) => {
       return
     }
 
+    // acá debe ir la lógica del paciente editado -> validar isChecking o las keys del objeto editado
+    // si no está isChecking, sigue flujo normal
+    // si sí está isChecking, guarda la data sin generar un id y la guarda reemplazando el paciente correcto de su arreglo
+
+    if (isChecking) {
+      // reemplaza el paciente nada más ez 
+      setListaPacientes(
+        listaPacientes.map( pacienteState => pacienteState.id === pacienteEditado.id ? {...nuevoPaciente, id: pacienteEditado.id} : pacienteState)
+      )
+    } else {
+      nuevoPaciente.id = generarId()
+      setListaPacientes(
+        [...listaPacientes, nuevoPaciente]
+      )
+    }
+
     setIsValidate(true)
     setMensajeError('')
-    setListaPacientes(
-      [...listaPacientes, nuevoPaciente]
-    )
+    
     setMascota('')
     setPropietario('')
     setEmail('')
     setFecha('')
     setSintomas('')
+
+    setIsChecking(false)
+    setPacienteEditado({})
   }
+
+  useEffect(() => {
+    if (Object.keys(pacienteEditado).length) {
+      setMascota(pacienteEditado.mascota)
+      setPropietario(pacienteEditado.propietario)
+      setEmail(pacienteEditado.email)
+      setFecha(pacienteEditado.fecha)
+      setSintomas(pacienteEditado.sintomas)
+    }
+  }, [pacienteEditado])
 
   return (
     <div className="md:w-1/2 lg:w-1/3">
@@ -150,7 +183,7 @@ const Formulario = ({listaPacientes, setListaPacientes}) => {
 
         <input 
           type="submit" 
-          value="Agregar Paciente"
+          value={isChecking ? 'Editar Paciente' : 'Agregar Paciente' }
           className="bg-indigo-600 text-white font-bold uppercase text-center rounded-md w-full px-4 py-3 hover:cursor-pointer hover:bg-indigo-700 transition-colors"
         />
       </form>

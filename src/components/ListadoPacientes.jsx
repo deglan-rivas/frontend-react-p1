@@ -1,6 +1,6 @@
 import Paciente from "./Paciente"
 
-const ListadoPacientes = ({listaPacientes, handleEliminar}) => {
+const ListadoPacientes = ({listaPacientes, handleEliminar, handleEditar}) => {
   return (
     <div className="mb-4 md:w-1/2 lg:w-2/3 h-screen overflow-auto">
       <h2 className="text-center font-bold text-3xl mb-4">
@@ -19,6 +19,7 @@ const ListadoPacientes = ({listaPacientes, handleEliminar}) => {
           key = {paciente.id}
           paciente = {paciente}
           handleEliminar = {handleEliminar}
+          handleEditar = {handleEditar}
         />
       )}
     </div>
