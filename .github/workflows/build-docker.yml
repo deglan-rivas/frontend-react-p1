@@ -9,12 +9,6 @@ on:
       - 'docs/**'
       - 'README.md'
 
-# env:
-#   account: ${{ vars.ACCOUNT }}
-#   container: ${{ vars.CONTAINER }}
-#   image: ${{ vars.IMAGE }} 
-#   account_2: deglanrivas
-
 jobs:
   build-docker-image:
     runs-on: ubuntu-latest
@@ -37,13 +31,3 @@ jobs:
         tags: |
           ${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}:latest
           ${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}:${{ github.sha }}
-
-# username: ${{ secrets.DOCKER_USERNAME }}
-# password: ${{ secrets.DOCKER_PASSWORD }}
-# ${{ vars.IMAGE_NAME }}
-# ${{ vars.CONTAINER_NAME }}
-# ${{ vars.PORT_MAPPING }}
-# host: ${{ secrets.HOST }}
-# username: ${{ secrets.USERNAME }}
-# key: ${{ secrets.KEY }}
-# port: ${{ secrets.PORT }}

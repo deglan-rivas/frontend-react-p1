@@ -6,19 +6,13 @@ on:
     types:
       - completed
 
-# env:
-#   account: ${{ vars.ACCOUNT }}
-#   container: ${{ vars.CONTAINER }}
-#   image: ${{ vars.IMAGE }} 
-#   account_2: deglanrivas
-
 jobs:
   deploy-to-ec2:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Executing remote command into EC2 by SSH
         uses: appleboy/ssh-action@v1.0.3
