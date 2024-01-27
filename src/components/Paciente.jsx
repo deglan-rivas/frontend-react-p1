@@ -1,52 +1,61 @@
-const Paciente = () => {
+const Paciente = ({paciente, handleEliminar}) => {
+  const {
+    mascota, 
+    propietario, 
+    email, 
+    fecha, 
+    sintomas,
+    id} = paciente
+  
   return (
     <div className="bg-white px-4 py-4 rounded-md mx-2 mb-4">
       <p className="font-bold uppercase text-gray-700 mb-4">
         Nombre: {""}
         <span className="normal-case font-normal">
-          Mr. Doe's Pet
+          {mascota}
         </span>
       </p>
 
       <p className="font-bold uppercase text-gray-700 mb-4">
         Propietario: {" "}
         <span className="normal-case font-normal">
-          John Doe
+          {propietario}
         </span>
       </p>
 
       <p className="font-bold uppercase text-gray-700 mb-4">
         Email: {" "}
         <span className="normal-case font-normal">
-          deglan.rivas@pucp.edu.pe
+          {email}
         </span>
       </p>
 
       <p className="font-bold uppercase text-gray-700 mb-4">
         Fecha alta: {" "}
         <span className="normal-case font-normal">
-          2024-02-02
+          {fecha}
         </span>
       </p>
 
       <p className="font-bold uppercase text-gray-700 mb-4">
         Síntomas: {" "}
         <span className="normal-case font-normal">
-          Mr. Doe's pet sleeps all day
+          {sintomas}
         </span>
       </p>
 
       <div className="flex justify-between">
         <input 
-          type="submit" 
-          className="bg-indigo-600 text-white font-bold uppercase text-center px-8 py-2 rounded-md mb-2"  
+          type="button" 
+          className="bg-indigo-600 text-white font-bold uppercase text-center px-8 py-2 rounded-md mb-2 hover:cursor-pointer hover:bg-red-800 transition-colors"  
           value="Editar"
         />
 
         <input 
-          type="submit" 
-          className="bg-red-700 text-white font-bold uppercase text-center px-8 py-2 rounded-md mb-2"  
+          type="button" 
+          className="bg-red-700 text-white font-bold uppercase text-center px-8 py-2 rounded-md mb-2 hover:cursor-pointer hover:bg-red-800 transition-colors"  
           value="Eliminar"
+          onClick={ () => handleEliminar(id) }
         />
       </div>
     </div>

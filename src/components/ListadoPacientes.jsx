@@ -1,23 +1,26 @@
 import Paciente from "./Paciente"
 
-const ListadoPacientes = () => {
+const ListadoPacientes = ({listaPacientes, handleEliminar}) => {
   return (
     <div className="mb-4 md:w-1/2 lg:w-2/3 h-screen overflow-auto">
       <h2 className="text-center font-bold text-3xl mb-4">
-        Listado Pacientes
+        {listaPacientes.length ? 'Listado Pacientes' : 'Sin Pacientes Disponibles'}
       </h2>
 
       <p className="text-center mb-12">
-        Administra tus  {""}
+        {listaPacientes.length ? 'Administra tus ' : 'Agregue un '}
         <span className="font-bold text-indigo-600 text-center text-lg">
-          Pacientes y Citas
+          {listaPacientes.length ? 'Pacientes y Citas' : 'Paciente para comenzar'}
         </span>
       </p>
 
-      <Paciente/>
-      <Paciente/>
-      <Paciente/>
-      <Paciente/>
+      {listaPacientes.map(paciente => 
+        <Paciente
+          key = {paciente.id}
+          paciente = {paciente}
+          handleEliminar = {handleEliminar}
+        />
+      )}
     </div>
   )
 }

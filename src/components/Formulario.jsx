@@ -1,4 +1,49 @@
-const Formulario = () => {
+import { useState } from 'react'  
+import Error from './Error'
+import { generarId } from '../../helpers/index.js'
+
+const Formulario = ({listaPacientes, setListaPacientes}) => {
+  const [mascota, setMascota] = useState('')
+  const [propietario, setPropietario] = useState('')
+  const [email, setEmail] = useState('')
+  const [fecha, setFecha] = useState('')
+  const [sintomas, setSintomas] = useState('')
+
+  const [isValidate, setIsValidate] = useState(false)
+  const [mensajeError, setMensajeError] = useState('')
+
+  const [paciente, setPaciente] = useState({})
+
+  const nuevoPaciente = {
+    mascota,
+    propietario,
+    email,
+    fecha,
+    sintomas,
+    id: generarId()
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (Object.values(nuevoPaciente).includes('')) {
+      setIsValidate(false)
+      setMensajeError('Todos los campos son obligatorios')
+      return
+    }
+
+    setIsValidate(true)
+    setMensajeError('')
+    setListaPacientes(
+      [...listaPacientes, nuevoPaciente]
+    )
+    setMascota('')
+    setPropietario('')
+    setEmail('')
+    setFecha('')
+    setSintomas('')
+  }
+
   return (
     <div className="md:w-1/2 lg:w-1/3">
       <h2 className="font-bold text-3xl text-center mb-4">
@@ -10,11 +55,16 @@ const Formulario = () => {
           Adminístralos
         </span>
       </p>
-      <form className="bg-white rounded-md shadow-md py-6 px-6 mx-2 mb-12 md:mb-0">
+      <form 
+        className="bg-white rounded-md shadow-md py-6 px-6 mx-2 mb-12 md:mb-0"
+        onSubmit={handleSubmit}
+      >
         <div className="mb-4">
-          <p className="bg-red-700 text-white text-center uppercase font-bold rounded-md py-3 px-4 mb-4">
-            Todos los campos son obligatorios
-          </p>
+          {mensajeError &&
+            <Error
+              mensajeError = {mensajeError}
+            />
+          }
 
           <label 
             htmlFor="mascota"
@@ -27,6 +77,8 @@ const Formulario = () => {
             id="mascota" 
             placeholder="Mr. Doe's Pet"
             className="border-2 px-2 py-2 w-full"
+            value={mascota}
+            onChange={e => setMascota(e.target.value.trim())}
           />
         </div>
 
@@ -42,6 +94,8 @@ const Formulario = () => {
             id="propietario" 
             placeholder="Mr.John Doe"
             className="border-2 px-2 py-2 w-full"
+            value={propietario}
+            onChange={e => setPropietario(e.target.value.trim())}
           />
         </div>
 
@@ -57,6 +111,8 @@ const Formulario = () => {
             id="email" 
             placeholder="john.doe@example.com"
             className="border-2 px-2 py-2 w-full"
+            value={email}
+            onChange={e => setEmail(e.target.value.trim())}
           />
         </div>
 
@@ -71,6 +127,8 @@ const Formulario = () => {
             type="date" 
             id="alta" 
             className="border-2 px-2 py-2 w-full"
+            value={fecha}
+            onChange={e => setFecha(e.target.value.trim())}
           />
         </div>
 
@@ -85,13 +143,15 @@ const Formulario = () => {
             id="síntomas" 
             placeholder="Mr. John Doe's pet sleeps all day"
             className="border-2 px-2 py-2 w-full"
+            value={sintomas}
+            onChange={e => setSintomas(e.target.value.trim())}
           />
         </div>
 
         <input 
           type="submit" 
           value="Agregar Paciente"
-          className="bg-indigo-600 text-white font-bold uppercase text-center rounded-md w-full px-4 py-3 "
+          className="bg-indigo-600 text-white font-bold uppercase text-center rounded-md w-full px-4 py-3 hover:cursor-pointer hover:bg-indigo-700 transition-colors"
         />
       </form>
     </div>
